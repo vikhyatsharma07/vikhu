@@ -1,5 +1,5 @@
 <html>
     <body>
-        <h2>Hello world Good Morning !</h2>
+        <h2>Hello world Devops Training </h2>
     </body>
 </html>
