@@ -17,6 +17,6 @@ pipeline {
                         echo "Deploying in Staging Area"
                   }
             }
-        ]
+
       }
 }
