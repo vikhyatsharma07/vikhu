@@ -1,16 +1,23 @@
 pipeline {
       agent any
       stages {
-            stage('package the  project ') {
+            stage('clean the  project ') {
                   steps {
-                    sh 'mvn clean package'
+                    sh 'mvn clean'
                   }
             }
+            stage("Start test execution")
+            {
+                steps{
+                    sh 'mvn test'
+                }
+            }
+             stage("Start test execution"){
+                           steps{
+                                sh 'mvn package'
+                            }
+                 }
       }
 
-        post {
-                success {
-                       archiveArtifacts artifacts: '**/*.war'
-                      }
-             }
+
 }
