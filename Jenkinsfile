@@ -1,23 +1,28 @@
 pipeline {
-      agent any
-      stages {
-            stage('clean the  project ') {
-                  steps {
-                    sh 'mvn clean'
-                  }
-            }
-            stage("Start test execution")
-            {
+    agent any
+    stages {
+
+      stage('clean the application'){
                 steps{
                     sh 'mvn test'
                 }
             }
-             stage("Start test execution"){
-                           steps{
-                                sh 'mvn package'
-                            }
-                 }
-      }
+        stage('test the application'){
+            steps{
+                sh 'mvn test'
+            }
+        }
+          stage('save build into artifacts') {
+                    steps {
+                        sh 'mvn package'
+                    }
+                    post {
+                        success {
+                            echo "Now Archiving the Artifacts...."
+                            archiveArtifacts artifacts: '**/*.war'
+                        }
+                    }
+                }
 
-
+    }
 }
