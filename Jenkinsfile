@@ -6,11 +6,11 @@ pipeline {
                     sh 'mvn clean package'
                   }
             }
-
-            post {
-                success{
-                 archiveArtifacts artifacts: '**/*.war'
-                }
-            }
       }
+
+        post {
+                success {
+                       archiveArtifacts artifacts: '**/*.war'
+                      }
+             }
 }
