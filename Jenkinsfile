@@ -19,7 +19,7 @@ pipeline {
                     }
                 }
 
-        stage('crate the tomcat ')
+       stage('crate the tomcat '){
         {
             sshagent(['tomcat']) {
                   sh """
