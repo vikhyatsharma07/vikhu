@@ -11,14 +11,6 @@ pipeline {
             steps{
                 sh 'mvn test'
             }
-
-            post {
-                success {
-                  echo "uploading the test report "
-                   junit 'target/surefire-reports/*.xml'
-                }
-
-            }
         }
           stage('save build into artifacts') {
                     steps {
