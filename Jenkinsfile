@@ -19,7 +19,7 @@ pipeline {
                     }
                 }
 
-        stage('deploy to tomcat ')
+        stage('crate the tomcat ')
         {
             sshagent(['tomcat']) {
                   sh """
