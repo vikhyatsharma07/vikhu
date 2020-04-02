@@ -1,0 +1,36 @@
+pipeline { // This is the user-defined block, which contains all the processes such as build, test, deploy, etc.
+    agent any  // An agent is a directive that can run multiple builds with only one instance of Jenkins.
+    // Runs the pipeline/ stage on any available agent.
+    stages {
+    stage('clean'){ // This block contains a series of steps in a pipeline. i.e., build, test, and deploy
+            steps{ //  	A step is nothing but a single task that executes a specific process at a defined time.
+                    sh 'mvn test'
+                }
+            }
+    stage('test'){
+            steps{
+                sh 'mvn test'
+            }
+        }
+       stage('save build into artifacts') {
+           steps {
+               sh 'mvn package'
+                }
+           post {
+            success {
+              echo "Now Archiving the Artifacts...."
+              archiveArtifacts artifacts: '**/*.war'
+                  }
+                }
+         }
+       stage('crate the tomcat ') {
+       steps{
+            sshagent(['tomcat']) {
+                  sh """
+                    scp -o StrictHostKeyChecking=no **/*.war ubuntu@172.31.45.203:/opt/tomcat/apache-tomcat-9.0.33/webapps
+                  """
+              }
+          }
+        }
+    }
+}

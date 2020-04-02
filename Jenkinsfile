@@ -1,42 +1,12 @@
-pipeline {
-    agent any
-    stages {
+pipeline{
 
-      stage('clean the application'){
-                steps{
-                    sh 'mvn test'
-                }
-            }
-        stage('test the application'){
-            steps{
-                sh 'mvn test'
-            }
-        }
+ agent any
 
-       stage('save build into artifacts') {
-                          steps {
-                              sh 'mvn package'
-                          }
-                          post {
-                              success {
-                                  echo "Now Archiving the Artifacts...."
-                                  archiveArtifacts artifacts: '**/*.war'
-                              }
-                          }
-                      }
-
-
-       stage('crate the tomcat '){
-       steps{
-            sshagent(['tomcat']) {
-                  sh """
-                    scp -o StrictHostKeyChecking=no **/*.war ubuntu@172.31.45.203:/opt/tomcat/apache-tomcat-9.0.33/webapps
-
-                  """
-              }
-              }
-        }
-
-
+ stages
+    {
+           stage('clean')
+           {
+                sh 'mvn clean'
+           }
     }
 }
