@@ -13,17 +13,24 @@ pipeline {
             }
         }
 
-          stage('crate the build '){
-                    steps{
-                        sh 'mvn package'
-                    }
-                }
+       stage('save build into artifacts') {
+                          steps {
+                              sh 'mvn package'
+                          }
+                          post {
+                              success {
+                                  echo "Now Archiving the Artifacts...."
+                                  archiveArtifacts artifacts: '**/*.war'
+                              }
+                          }
+                      }
+
 
        stage('crate the tomcat '){
        steps{
             sshagent(['tomcat']) {
                   sh """
-                    scp -o StrictHostKeyChecking=no targer/embeddedTomcatSample.war ubuntu@172.31.45.203/opt/tomcat/apache-tomcat-9.0.33/webapps
+                    scp -o StrictHostKeyChecking=no **/*.war ubuntu@172.31.45.203/opt/tomcat/apache-tomcat-9.0.33/webapps
 
                     ssh ubuntu@172.31.45.203//opt/tomcat/apache-tomcat-9.0.33/bin/shutdown.sh
 
@@ -34,16 +41,6 @@ pipeline {
               }
         }
 
-          stage('save build into artifacts') {
-                    steps {
-                        sh 'mvn package'
-                    }
-                    post {
-                        success {
-                            echo "Now Archiving the Artifacts...."
-                            archiveArtifacts artifacts: '**/*.war'
-                        }
-                    }
-                }
+
     }
 }
