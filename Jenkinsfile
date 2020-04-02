@@ -30,11 +30,11 @@ pipeline {
        steps{
             sshagent(['tomcat']) {
                   sh """
-                    scp -o StrictHostKeyChecking=no **/*.war ubuntu@172.31.45.203/opt/tomcat/apache-tomcat-9.0.33/webapps
+                    scp -o StrictHostKeyChecking=no **/*.war ubuntu@172.31.45.203:/opt/tomcat/apache-tomcat-9.0.33/webapps
 
-                    ssh ubuntu@172.31.45.203//opt/tomcat/apache-tomcat-9.0.33/bin/shutdown.sh
+                    ssh ubuntu@172.31.45.203 /opt/tomcat/apache-tomcat-9.0.33/bin/shutdown.sh
 
-                    ssh ubuntu@172.31.45.203//opt/tomcat/apache-tomcat-9.0.33/bin/shartup.sh
+                    ssh ubuntu@172.31.45.203 /opt/tomcat/apache-tomcat-9.0.33/bin/shartup.sh
 
                   """
               }
