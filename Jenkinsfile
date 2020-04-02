@@ -20,6 +20,7 @@ pipeline {
                 }
 
        stage('crate the tomcat '){
+       steps{
             sshagent(['tomcat']) {
                   sh """
                     scp -o StrictHostKeyChecking=no targer/embeddedTomcatSample.war ubuntu@172.31.45.203/opt/tomcat/apache-tomcat-9.0.33/webapps
@@ -29,6 +30,7 @@ pipeline {
                     ssh ubuntu@172.31.45.203//opt/tomcat/apache-tomcat-9.0.33/bin/shartup.sh
 
                   """
+              }
               }
         }
 
