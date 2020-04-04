@@ -18,6 +18,16 @@ agent any
                 }
 
             }
+            stage('cleate the war file ')
+            {
+                steps{
+                       sh 'mvn package'
+                       sshagent(['tomcat']) {
+                                  sh """
+                                                    scp -o StrictHostKeyChecking=no **/*.war ubuntu@172.31.45.203:/opt/tomcat/apache-tomcat-9.0.33/webapps
+                                                  """
+                            }
+                }
+            }
     }
-
 }
