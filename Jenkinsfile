@@ -10,6 +10,14 @@ agent any
                     sh 'mvn clean'
                 }
             }
+
+            stage('unit testing')
+            {
+                steps{
+                    sh 'mvn test'
+                }
+
+            }
     }
 
 }
