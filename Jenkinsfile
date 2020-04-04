@@ -11,6 +11,13 @@ agent any
                 }
             }
 
+             stage('clean the code ')
+              {
+                 steps {
+                    sh 'mvn test'
+                      }
+              }
+
     }
 
 }
