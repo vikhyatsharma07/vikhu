@@ -1,12 +1,16 @@
-pipeline{
+pipeline {
 
- agent any
+agent any
 
- stages
-    {
-           stage('clean')
-           {
-                sh 'mvn clean'
-           }
+    stages{
+
+            stage('clean the code ')
+            {
+                steps{
+                    sh 'mvn clean'
+                }
+            }
+
     }
+
 }
